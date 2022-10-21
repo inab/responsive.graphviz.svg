@@ -1,5 +1,7 @@
-jquery.graphviz.svg
+responsive.graphviz.svg
 ===================
+
+This repo is a fork from https://github.com/mountainstorm/jquery.graphviz.svg
 
 jQuery plugin to make Graphviz SVG output more interactive and easier to navigate.  Makes it easy to have features like:
 * Highlight nodes/edges
@@ -8,7 +10,7 @@ jQuery plugin to make Graphviz SVG output more interactive and easier to navigat
 * Fancy UI tooltips; bootstrap supported out the box
 * Move things forward/back in the graph
 
-Have a look at the demo: https://cdn.rawgit.com/mountainstorm/jquery.graphviz.svg/master/demo.html
+Have a look at the demo showing a peek preview of OpenEBench Benchmarking Data Model 2.0: https://cdn.rawgit.com/inab/responsive.graphviz.svg/master/demo-bdm.html
 
 
 Documentation
@@ -66,6 +68,9 @@ Returns an object mapping graphviz node names to its DOM element
 `GraphvizSvg.edgesByName()`
 Returns an object mapping graphviz edge names to its DOM element
 
+`GraphvizSvg.linkedEdge(edge)`
+Returns a jQuery set of DOM elements which the `edge` links
+
 `GraphvizSvg.linkedTo(node, includeEdges)`
 Returns a jQuery set of DOM elements linked to `node`; if includeEdges is true if also includes the edges
 
@@ -76,7 +81,7 @@ Returns a jQuery set of DOM elements linked from `node`; if includeEdges is true
 Returns a jQuery set of DOM elements linked with `node` (in an undirected graph); if includeEdges is true if also includes the edges
 
 `GraphvizSvg.tooltip($elements, show)`
-Show/hide tooltips on the SOM elements in the `$elements` set
+Show/hide tooltips on the DOM elements in the `$elements` set
 
 `GraphvizSvg.bringToFront($elements)`
 Brings the DOM elements in the jQuery set to the front
@@ -102,7 +107,7 @@ Keywords
 jQuery, Graphviz, dot, svg
 
 
-License
+Original License
 -------
 
 Copyright (c) 2015 Mountainstorm

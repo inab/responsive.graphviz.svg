@@ -204,12 +204,19 @@
     var $title = $el.children('title')
     if ($title[0]) {
       // remove any compass points:
+      /*
       var title = $title.text().replace(/:[snew][ew]?/g,'')
+      */
+      var title = $title.text().replace(/^([^:]+):[^->]+->/,function(match, p1) { return p1 + '->' });
+      title = title.replace(/->([^:]+):.+$/, function(match, p1) { return '->' + p1 });
       $el.attr('data-name', title)
       $title.remove()
       if (isNode) {
         this._nodesByName[title] = $el[0]
       } else {
+        var from_to = title.split('->');
+        $el.attr('data-from', from_to[0]);
+        $el.attr('data-to', from_to[1]);
         this._edgesByName[title] = $el[0]
       }
       // without a title we can't tell if its a user comment or not
@@ -411,9 +418,16 @@
     var $retval = $()
     this.findLinked(node, includeEdges, function (nodeName, edgeName) {
       var other = null;
+      /*
       var match = '->' + nodeName
       if (edgeName.endsWith(match)) {
         other = edgeName.substring(0, edgeName.length - match.length);
+      }
+      */
+      var matchExp = new RegExp('->' + nodeName + '(:[a-zA-Z0-9]+)?$');
+      var res = edgeName.match(matchExp);
+      if (res) {
+        other = edgeName.substring(0, edgeName.length - res[0].length);
       }
       return other;
     }, $retval)
@@ -424,9 +438,16 @@
     var $retval = $()
     this.findLinked(node, includeEdges, function (nodeName, edgeName) {
       var other = null;
+      /*
       var match = nodeName + '->'
       if (edgeName.startsWith(match)) {
         other = edgeName.substring(match.length);
+      }
+      */
+      var matchExp = new RegExp('^' + nodeName + '(:[a-zA-Z0-9]+)?->');
+      var res = edgeName.match(matchExp);
+      if (res) {
+        other = edgeName.substring(res[0].length);
       }
       return other;
     }, $retval)
@@ -436,12 +457,19 @@
   GraphvizSvg.prototype.linked = function (node, includeEdges) {
     var $retval = $()
     this.findLinked(node, includeEdges, function (nodeName, edgeName) {
-      return '^' + name + '--(.*)$'
+      return '^' + name + '(:[a-zA-Z0-9]+)?--(.*)$'
     }, $retval)
     this.findLinked(node, includeEdges, function (nodeName, edgeName) {
-      return '^(.*)--' + name + '$'
+      return '^(.*)--' + name + '(:[a-zA-Z0-9]+)?$'
     }, $retval)
     return $retval
+  }
+  
+  GraphvizSvg.prototype.linkedEdge = function(edge) {
+    var $retval = $();
+    $retval.push(this._nodesByName[$(edge).attr('data-from')]);
+    $retval.push(this._nodesByName[$(edge).attr('data-to')]);
+    return $retval;
   }
 
   GraphvizSvg.prototype.tooltip = function ($elements, show) {
