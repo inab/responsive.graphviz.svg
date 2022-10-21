@@ -10,7 +10,7 @@ jQuery plugin to make Graphviz SVG output more interactive and easier to navigat
 * Fancy UI tooltips; bootstrap supported out the box
 * Move things forward/back in the graph
 
-Have a look at the demo showing a peek preview of OpenEBench Benchmarking Data Model 2.0: https://cdn.rawgit.com/inab/responsive.graphviz.svg/master/demo-bdm.html
+Have a look at the demo showing a peek preview of OpenEBench Benchmarking Data Model 2.0: https://inab.github.io/responsive.graphviz.svg/demo-bdm.html
 
 
 Documentation
